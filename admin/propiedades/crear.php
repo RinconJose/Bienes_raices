@@ -10,6 +10,7 @@
     // Arreglo con mensaje de errores
     $errores = [];
 
+    // Creando variables para guardar el contenido de los inputs por si salen errores
     $titulo = '';
     $precio = '';
     $descripcion = '';
