@@ -11,6 +11,17 @@
 
     .contenido-anuncio {
         padding: 2rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    h3 {
+        @include tablet {
+            min-height: 10.8rem;
+        }
+        @include desktopXL {
+            min-height: 7rem;
+        }
     }
 
     h3, p {

@@ -1,10 +1,19 @@
 <?php 
 
-    // echo "<pre>";
-    // var_dump($_GET);
-    // echo "</pre>";
+    //Importar DB
+    require '../includes/config/database.php';
+    $db = conectarDB();
+
+    // Escribir el Query
+    $query = "SELECT * FROM propiedades";
+
+    // Consultar la DB
+    $respuestaConsulta = mysqli_query($db, $query);
+
+    // Muestra mensaje condicional "Agregado propiedad"
     $respuesta = $_GET['respuesta'] ?? null;
 
+    // Incluye template
     require '../includes/funciones.php';
     incluirTemplate('header');
     
@@ -28,21 +37,27 @@
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody><!-- Mostrar los resultados de la consulta -->
+            <?php while( $propiedad = mysqli_fetch_assoc( $respuestaConsulta ) ): ?>
                 <tr>
-                    <td>1</td>
-                    <td>Casa en la playa</td>
-                    <td><img src="/imagenes/484c3712057ef20c653c84283d7f5232.jpg" class="imagen-tabla" alt=""></td>
-                    <td>120000000</td>
+                    <td><?php echo $propiedad['id'] ?></td>
+                    <td><?php echo $propiedad['titulo'] ?></td>
+                    <td><img src="../imagenes/<?php echo $propiedad['imagen'] ?>" class="imagen-tabla" alt=""></td>
+                    <td>$<?php echo $propiedad['precio'] ?></td>
                     <td>
                         <a href="#" class="boton-rojo-block">Eliminar</a>
-                        <a href="#" class="boton-amarillo-block">Actualizar</a>
+                        <a href="../admin/propiedades/actualizar.php?id=<?php echo $propiedad['id'] ?>" class="boton-amarillo-block">Actualizar</a>
                     </td>
                 </tr>
+            <?php endwhile; ?>
             </tbody>
         </table>
 
     </main>
 <?php
+
+    // Cerrar la conexión de la DB
+    mysqli_close($db);
+
     incluirTemplate('footer');
 ?>
