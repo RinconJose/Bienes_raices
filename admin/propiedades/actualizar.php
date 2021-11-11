@@ -13,6 +13,11 @@
     require '../../includes/config/database.php';
     $db = conectarDB();
 
+    // Obtener los datos de la propiedad
+    $consulta = "SELECT * FROM propiedades WHERE id = ${id}";
+    $resultado = mysqli_query($db, $consulta);
+    $propiedad = mysqli_fetch_assoc($resultado);
+
     // Consultar la BD para obtener los vendedores
     $consulta = "SELECT * FROM vendedores";
     $resultado = mysqli_query($db, $consulta);
@@ -21,13 +26,14 @@
     $errores = [];
 
     // Creando variables para guardar el contenido de los inputs por si salen errores
-    $titulo = '';
-    $precio = '';
-    $descripcion = '';
-    $habitaciones = '';
-    $wc = '';
-    $estacionamiento = '';
-    $vendedorId = '';
+    $titulo = $propiedad['titulo'];
+    $precio = $propiedad['precio'];
+    $descripcion = $propiedad['descripcion'];
+    $habitaciones = $propiedad['habitaciones'];
+    $wc = $propiedad['wc'];
+    $estacionamiento = $propiedad['estacionamiento'];
+    $vendedorId = $propiedad['vendedorId'];
+    $imagenPropiedad = $propiedad['imagen'];
 
     // Ejecutar el código después de que el usuario envía el formulario
     if( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
@@ -144,7 +150,7 @@
             </div>
         <?php endforeach; ?>
 
-        <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
+        <form class="formulario" method="POST" action="/admin/propiedades/actualizar.php" enctype="multipart/form-data">
             <fieldset>
                 <legend>Información General</legend>
 
@@ -156,6 +162,7 @@
 
                 <label for="imagen">Imagen:</label>
                 <input type="file" id="imagen" accept="image/jpeg, image/png" name="imagen">
+                <img src="/imagenes/<?php echo $imagenPropiedad ?>" alt="imagen de la propiedad" class="imagen-small">
 
                 <label for="descrpcion">Descrpción:</label>
                 <textarea id="descripcion" name="descripcion"><?php echo $descripcion; ?></textarea>
