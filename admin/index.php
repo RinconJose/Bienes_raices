@@ -23,6 +23,8 @@
         <h1>Administrador de Bienes Raices</h1>
         <?php if( intval($respuesta) === 1 ): ?>
             <p class="alerta exito">Anuncio creado correctamente.</p>
+        <?php elseif( intval( $respuesta ) === 2 ): ?>
+            <p class="alerta exito">Anuncio actualizado correctamente.</p>
         <?php endif; ?>
 
         <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a>

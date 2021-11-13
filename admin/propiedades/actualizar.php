@@ -38,9 +38,9 @@
     // Ejecutar el código después de que el usuario envía el formulario
     if( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
-        // echo "<pre>";
-        // var_dump($_POST);
-        // echo "</pre>";
+        echo "<pre>";
+        var_dump($_POST);
+        echo "</pre>";
 
         // echo "<pre>";
         // var_dump($_FILES);
@@ -86,10 +86,6 @@
             $errores[] = "Elige un vendedor";
         }
 
-        if( !$imagen['name'] || $imagen['error'] ) {
-            $errores[] = "La imagen es obligatoria";
-        }
-
         // Validar por tamaño de la imagen (1mb máximo)
         $medida = 1000 * 1000;
 
@@ -120,15 +116,17 @@
             move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
 
             // Insertar en la base de datos
-            $query = " INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId ) VALUES ( '$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId' ) ";
+            $query = " UPDATE propiedades SET titulo = '${titulo}', precio = '${precio}', imagen = '${nombreImagen}', descripcion = '${descripcion}', habitaciones = ${habitaciones}, wc = ${wc}, estacionamiento = ${estacionamiento}, vendedorId = ${vendedorId} WHERE id = ${id}";
 
             // echo $query;
+
+            // exit;
 
             $resultado = mysqli_query($db, $query);
 
             if( $resultado ) {
                 // Redireccionar al usuario
-                header('Location: /admin?respuesta=1');
+                header('Location: /admin?respuesta=2');
             }
         } 
 
@@ -150,7 +148,7 @@
             </div>
         <?php endforeach; ?>
 
-        <form class="formulario" method="POST" action="/admin/propiedades/actualizar.php" enctype="multipart/form-data">
+        <form class="formulario" method="POST" enctype="multipart/form-data">
             <fieldset>
                 <legend>Información General</legend>
 
