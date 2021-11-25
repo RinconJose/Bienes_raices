@@ -1,4 +1,4 @@
-<?php 
+<?php
 
     // Importar conexión a DB
     require './includes/config/database.php';
@@ -36,7 +36,13 @@
                 $auth = password_verify($password, $usuario['password']);
 
                 if( $auth ) {
-                    // El usuario está autenticado
+                    // El usuario está autenticado, iniciar sesión
+                    session_start();
+
+                    // Agregar elementos a la sesión
+                    $_SESSION['usuario'] = $usuario['email'];
+                    $_SESSION['login'] = true;
+
                 } else {
                     // El password es incorrecto
                     $errores[] = 'El password es incorrecto';

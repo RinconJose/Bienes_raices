@@ -1,6 +1,11 @@
-<?php 
+<?php
+    // Verificar si está autenticado
+    require '../includes/funciones.php';
+    $auth = estaAutenticado();
 
-    
+    if( !$auth ) {
+        header('location: /');
+    }
 
     //Importar DB
     require '../includes/config/database.php';
@@ -39,9 +44,8 @@
     }
 
     // Incluye template
-    require '../includes/funciones.php';
     incluirTemplate('header');
-    
+
 ?>
 
     <main class="contenedor seccion">

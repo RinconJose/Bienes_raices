@@ -1,4 +1,12 @@
-<?php 
+<?php
+
+    require '../../includes/funciones.php';
+    $auth = estaAutenticado();
+
+    if( !$auth ) {
+        header('location: /');
+    }
+
     // Conección a la BD
     require '../../includes/config/database.php';
     $db = conectarDB();
@@ -105,7 +113,7 @@
 
             // Insertar en la base de datos
             $query = " INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId ) VALUES ( '$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId' ) ";
-            
+
             // echo $query;
             // exit;
 
@@ -115,12 +123,12 @@
                 // Redireccionar al usuario
                 header('location: /admin?respuesta=1');
             }
-        } 
+        }
 
 
 
     }
-    require '../../includes/funciones.php';
+
     incluirTemplate('header');
 ?>
     <main class="contenedor seccion">
@@ -155,32 +163,32 @@
                 <legend>Información Propiedad</legend>
 
                 <label for="habitaciones">Habitaciones:</label>
-                <input 
-                    type="number" 
-                    id="habitaciones" 
-                    name="habitaciones" 
-                    placeholder="Ej: 3" 
-                    min="1" 
+                <input
+                    type="number"
+                    id="habitaciones"
+                    name="habitaciones"
+                    placeholder="Ej: 3"
+                    min="1"
                     max=9
                     value="<?php echo $habitaciones; ?>">
 
                 <label for="wc">Baños:</label>
-                <input 
-                    type="number" 
-                    id="wc" 
-                    name="wc" 
-                    placeholder="Ej: 3" 
-                    min="1" 
+                <input
+                    type="number"
+                    id="wc"
+                    name="wc"
+                    placeholder="Ej: 3"
+                    min="1"
                     max=9
                     value="<?php echo $wc; ?>">
 
                 <label for="estacionamiento">estacionamiento:</label>
-                <input 
-                    type="number" 
-                    id="estacionamiento" 
-                    name="estacionamiento" 
-                    placeholder="Ej: 3" 
-                    min="1" 
+                <input
+                    type="number"
+                    id="estacionamiento"
+                    name="estacionamiento"
+                    placeholder="Ej: 3"
+                    min="1"
                     max=9
                     value="<?php echo $estacionamiento; ?>">
 
