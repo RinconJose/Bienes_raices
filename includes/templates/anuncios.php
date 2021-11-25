@@ -9,7 +9,6 @@
 
     // Obtener resultados
     $resultado = mysqli_query($db, $query);
-
 ?>
 
 
