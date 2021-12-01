@@ -1,7 +1,7 @@
 <?php
 
-    // Importar conexión a DB
-    require './includes/config/database.php';
+    // Incluye header
+    require 'includes/app.php';
     $db = conectarDB();
 
     // Autenticar el usuario
@@ -57,8 +57,7 @@
     }
 
 
-    // Incluye header
-    require 'includes/funciones.php';
+
     incluirTemplate('header');
 ?>
     <main class="contenedor seccion contenido-centrado">

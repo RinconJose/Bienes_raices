@@ -1,10 +1,10 @@
 <?php 
-    require 'includes/funciones.php';
+    require 'includes/app.php';
     incluirTemplate('header');
 ?>
     <main class="contenedor seccion">
         <h2>Casa y Depas en venta</h2>
-        <?php 
+        <?php
             $limite = 10;
             include './includes/templates/anuncios.php';
         ?>

@@ -1,0 +1,17 @@
+{
+    "name": "pavilion150/bienes_raices",
+    "description": "Creando proyecto con POO",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Jose Rincon",
+            "email": "rincon.jmg@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\" : "./classes"
+        }
+    }
+}

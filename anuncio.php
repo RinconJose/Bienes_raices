@@ -1,4 +1,4 @@
-<?php 
+<?php
 
     $id = $_GET['id'];
     $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -7,11 +7,10 @@
         header('location: /');
     }
 
-    require 'includes/funciones.php';
+    require 'includes/app.php';
     incluirTemplate('header');
 
     // Conectar base de dato
-    require './includes/config/database.php';
     $db = conectarDB();
 
     // Consultar base de datos
@@ -26,7 +25,7 @@
 
     $propiedad = mysqli_fetch_assoc($resultado);
 ?>
-    
+
     <main class="contenedor seccion contenido-center">
         <h1><?php echo $propiedad['titulo'] ?></h1>
         <img loading="lazy" src="imagenes/<?php echo $propiedad['imagen'] ?>" alt="imagen de la propiedad">
