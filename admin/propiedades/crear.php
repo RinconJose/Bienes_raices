@@ -1,14 +1,12 @@
 <?php
 
-    require '../../includes/funciones.php';
-    $auth = estaAutenticado();
+    require '../../includes/app.php';
 
-    if( !$auth ) {
-        header('location: /');
-    }
+    use App\Propiedad;
+
+    estaAutenticado();
 
     // Conección a la BD
-    require '../../includes/config/database.php';
     $db = conectarDB();
 
     // Consultar la BD para obtener los vendedores
@@ -29,6 +27,12 @@
 
     // Ejecutar el código después de que el usuario envía el formulario
     if( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+
+        $propiedad = new Propiedad($_POST);
+
+        $propiedad->guardar();
+
+        debuguear($propiedad);
 
         // echo "<pre>";
         // var_dump($_POST);
@@ -196,7 +200,7 @@
 
             <fieldset>
                 <legend>Vendedor</legend>
-                <select name="vendedor">
+                <select name="vendedorId">
                     <option value="">-- Seleccione --</option>
                     <?php while( $row = mysqli_fetch_assoc($resultado) ) : ?>
                         <option <?php echo $vendedorId === $row['id'] ? 'selected' : ''; ?> value="<?php echo $row['id']; ?>"><?php echo $row['nombre'] . " " . $row['apellido']; ?></option>
