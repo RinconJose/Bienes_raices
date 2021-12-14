@@ -14,7 +14,7 @@
     $resultado = mysqli_query($db, $consulta);
 
     // Arreglo con mensaje de errores
-    $errores = [];
+    $errores = Propiedad::getErrores();
 
     // Creando variables para guardar el contenido de los inputs por si salen errores
     $titulo = '';
@@ -30,75 +30,20 @@
 
         $propiedad = new Propiedad($_POST);
 
-        $propiedad->guardar();
+        $errores = $propiedad->validar();
 
-        debuguear($propiedad);
-
-        // echo "<pre>";
-        // var_dump($_POST);
-        // echo "</pre>";
-
-        // echo "<pre>";
-        // var_dump($_FILES);
-        // echo "</pre>";
-
-        $titulo = mysqli_real_escape_string( $db, $_POST['titulo'] );
-        $precio = mysqli_real_escape_string( $db, $_POST['precio'] );
-        $descripcion = mysqli_real_escape_string( $db, $_POST['descripcion'] );
-        $habitaciones = mysqli_real_escape_string( $db, $_POST['habitaciones'] );
-        $wc = mysqli_real_escape_string( $db, $_POST['wc'] );
-        $estacionamiento = mysqli_real_escape_string( $db, $_POST['estacionamiento'] );
-        $vendedorId = mysqli_real_escape_string( $db, $_POST['vendedor'] );
-        $creado = date('Y/m/d');
-
-        // Asignar files a una variable
-        $imagen = $_FILES['imagen'];
-
-        if( !$titulo ) {
-            $errores[] = "Debes añadir un titulo";
-        }
-
-        if( !$precio ) {
-            $errores[] = "El precio es obligatorio";
-        }
-
-        if( strlen($descripcion) < 50 ) {
-            $errores[] = "La descripcion es obligatorio y debe tener al menos 50 caracteres";
-        }
-
-        if( !$habitaciones ) {
-            $errores[] = "La cantidad de habitaciones es obligatorio";
-        }
-
-        if( !$wc ) {
-            $errores[] = "La cantidad de baños es obligatorio";
-        }
-
-        if( !$estacionamiento) {
-            $errores[] = "La cantidad de estacionamientos es obligatorio";
-        }
-
-        if( !$vendedorId ) {
-            $errores[] = "Elige un vendedor";
-        }
-
-        if( !$imagen['name'] || $imagen['error'] ) {
-            $errores[] = "La imagen es obligatoria";
-        }
-
-        // Validar por tamaño de la imagen (1mb máximo)
-        $medida = 1000 * 1000;
-
-        if($imagen['size'] > $medida) {
-            $errores[] = "La imagen es muy pesada";
-        }
-
-        // echo "<pre>";
-        // var_dump($errores);
-        // echo "</pre>";
-
-        // Revisar que el arreglo de errores este vacío
         if( empty($errores) ) {
+            // Asignar files a una variable
+            $imagen = $_FILES['imagen'];
+    
+    
+            
+    
+            // echo "<pre>";
+            // var_dump($errores);
+            // echo "</pre>";
+    
+            // Revisar que el arreglo de errores este vacío
 
             /* SUBIDA DE ARCHIVOS */
 

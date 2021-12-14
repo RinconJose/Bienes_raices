@@ -8,6 +8,9 @@ class Propiedad {
     protected static $db;
     protected static $columnaDB = ['id', 'titulo', 'precio', 'imagen', 'descripcion', 'habitaciones', 'wc', 'estacionamiento', 'creado', 'vendedorId'];
 
+    // Errores ó Validación
+    protected static $errores = [];
+
     public $id;
     public $titulo;
     public $precio;
@@ -42,10 +45,13 @@ class Propiedad {
 
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
-        debuguear($atributos);
 
         // Insertar en la base de datos
-        $query = " INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId ) VALUES ( '$this->titulo', '$this->precio', '$this->imagen', '$this->descripcion', '$this->habitaciones', '$this->wc', '$this->estacionamiento', '$this->creado', '$this->vendedorId' ) ";
+        $query = "INSERT INTO propiedades ( ";
+        $query .= join(', ', array_keys($atributos));
+        $query .= " ) VALUES (' ";
+        $query .= join("', '", array_values($atributos));
+        $query .= " ') ";
 
         $resultado = self::$db->query($query);
 
@@ -72,5 +78,51 @@ class Propiedad {
         return $sanitizando;
     }
 
+    // Validación
+    public static function getErrores() {
+        return self::$errores;
+    }
 
+    public function validar() {
+        if( !$this->titulo ) {
+            self::$errores[] = "Debes añadir un titulo";
+        }
+
+        if( !$this->precio ) {
+            self::$errores[] = "El precio es obligatorio";
+        }
+
+        if( strlen(!$this->descripcion) < 50 ) {
+            self::$errores[] = "La descripcion es obligatorio y debe tener al menos 50 caracteres";
+        }
+
+        if( !$this->habitaciones ) {
+            self::$errores[] = "La cantidad de habitaciones es obligatorio";
+        }
+
+        if( !$this->wc ) {
+            self::$errores[] = "La cantidad de baños es obligatorio";
+        }
+
+        if( !$this->estacionamiento) {
+            self::$errores[] = "La cantidad de estacionamientos es obligatorio";
+        }
+
+        if( !$this->vendedorId ) {
+            self::$errores[] = "Elige un vendedor";
+        }
+
+        // if( !$this->imagen['name'] || $this->imagen['error'] ) {
+        //     $errores[] = "La imagen es obligatoria";
+        // }
+
+        // // Validar por tamaño de la imagen (1mb máximo)
+        // $medida = 1000 * 1000;
+
+        // if($this->imagen['size'] > $this->medida) {
+        //     $errores[] = "La imagen es muy pesada";
+        // }
+        
+        return self::$errores;
+    }
 }
