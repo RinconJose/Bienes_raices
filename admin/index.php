@@ -1,21 +1,12 @@
 <?php
     // Verificar si está autenticado
-    require '../includes/funciones.php';
-    $auth = estaAutenticado();
+    require '../includes/app.php';
+    estaAutenticado();
 
-    if( !$auth ) {
-        header('location: /');
-    }
+    use App\Propiedad;
 
-    //Importar DB
-    require '../includes/config/database.php';
-    $db = conectarDB();
-
-    // Escribir el Query
-    $query = "SELECT * FROM propiedades";
-
-    // Consultar la DB
-    $respuestaConsulta = mysqli_query($db, $query);
+    // Implementar un método para obtener todas las propiedades
+    $propiedad = Propiedad::all();
 
     // Muestra mensaje condicional "Agregado propiedad"
     $respuesta = $_GET['respuesta'] ?? null;
